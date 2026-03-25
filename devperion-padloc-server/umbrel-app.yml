@@ -1,0 +1,29 @@
+manifestVersion: 1
+id: devperion-padloc-server
+name: Padloc Server
+tagline: Replace this tagline with your app's tagline
+icon: https://web.padloc.app/favicon.png
+category: Development
+version: "1.0.0"
+port: 4080
+description: >-
+  Add your app's description here.
+
+
+  You can also add newlines!
+
+developer: Devperion
+website: https://padloc.app/
+submitter: Umbrel
+submission: https://github.com/padloc/padloc/tree/main/packages/server
+repo: https://github.com/padloc/padloc/tree/main/packages/server
+support: https://github.com/padloc/padloc/tree/main/packages/server
+gallery:
+  - https://padloc.app/assets/img/screenshots/dark/detail_desktop.webp
+  - https://padloc.app/assets/img/screenshots/dark/detail_browser.webp
+releaseNotes: >-
+  Add what's new in the latest version of your app here.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
