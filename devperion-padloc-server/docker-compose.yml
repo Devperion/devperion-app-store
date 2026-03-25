@@ -1,34 +1,32 @@
 version: "3.7"
+
 services:
-    server:
-        image: padloc/server
-        build:
-            context: github.com/padloc/padloc.git#main
-            dockerfile: Dockerfile-server
-        environment:
-            PL_DATA_BACKEND: leveldb
-            PL_DATA_LEVELDB_DIR: /data
-            PL_DATA_ATTACHMENTS_BACKEND: fs
-            PL_DATA_ATTACHMENTS_DIR: /attachments
-            PL_SERVER_CLIENT_URL: http://localhost:8080
-            PL_EMAIL_BACKEND: console
-        ports:
-            - 3000:3000
-        volumes:
-            - attachments:/attachments
-            - data:/data
-        restart: unless-stopped
-    pwa:
-        image: padloc/pwa
-        build:
-            context: github.com/padloc/padloc.git#main
-            dockerfile: Dockerfile-pwa
-        environment:
-            PL_SERVER_URL: http://localhost:3000
-            PL_PWA_URL: http://localhost:8080
-        ports:
-            - 8080:4080
-        restart: on-failure
-volumes:
-    data:
-    attachments:
+  app_proxy:
+    environment:
+      APP_HOST: devperion-padloc-server_pwa_1
+      APP_PORT: 8080
+
+  server:
+    image: padloc/server:latest
+    init: true
+    environment:
+      PL_DATA_BACKEND: leveldb
+      PL_DATA_LEVELDB_DIR: /data
+      PL_DATA_ATTACHMENTS_BACKEND: fs
+      PL_DATA_ATTACHMENTS_DIR: /attachments
+      PL_SERVER_CLIENT_URL: http://localhost:8080
+      PL_EMAIL_BACKEND: console
+    volumes:
+      - ${APP_DATA_DIR}/attachments:/attachments
+      - ${APP_DATA_DIR}/data:/data
+    restart: unless-stopped
+
+  pwa:
+    image: padloc/pwa:latest
+    init: true
+    depends_on:
+      - server
+    environment:
+      PL_SERVER_URL: http://server:3000
+      PL_PWA_URL: http://localhost:8080
+    restart: unless-stopped
