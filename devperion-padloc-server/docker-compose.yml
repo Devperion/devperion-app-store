@@ -4,7 +4,7 @@ services:
   app_proxy:
     environment:
       APP_HOST: devperion-padloc-server_pwa_1
-      APP_PORT: 8080
+      APP_PORT: 5080
 
   server:
     image: padloc/server:latest
@@ -14,7 +14,9 @@ services:
       PL_DATA_LEVELDB_DIR: /data
       PL_DATA_ATTACHMENTS_BACKEND: fs
       PL_DATA_ATTACHMENTS_DIR: /attachments
-      PL_SERVER_CLIENT_URL: http://localhost:8080
+      PL_ATTACHMENTS_BACKEND: fs
+      PL_ATTACHMENTS_DIR: /attachments
+      PL_SERVER_CLIENT_URL: http://localhost:5080
       PL_EMAIL_BACKEND: console
     volumes:
       - ${APP_DATA_DIR}/attachments:/attachments
@@ -28,5 +30,6 @@ services:
       - server
     environment:
       PL_SERVER_URL: http://server:3000
-      PL_PWA_URL: http://localhost:8080
+      PL_PWA_URL: http://localhost:5080
+      PL_PWA_PORT: 5080
     restart: unless-stopped
